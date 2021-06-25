@@ -1,5 +1,8 @@
 $(function () {
-  // $("#signupform").hide();
+   $("#signupform").hide();
+   $("#addBtnrecord").hide();
+   $(".btn-danger").hide();
+  
   showMatchData();
    $("#user").on("click", ".btn-danger", deleteData);
    $("#Signup").click(showsignup);
@@ -111,6 +114,8 @@ function ValidateUser() {
     data: { Email,Password },
     success: function (response) {
       console.log(response)
+      $("#addBtnrecord").show();
+      $(".btn-danger").show();
     },
   });
 }

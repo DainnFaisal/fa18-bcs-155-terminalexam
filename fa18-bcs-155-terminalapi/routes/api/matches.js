@@ -1,21 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var {MatchModel}= require("../../models/MatchModal");
-var validateProduct= require("../../middlewares/validateProducts");
+var validateProduct= require("../../middlewares/validateUser");
 var auth= require("../../middlewares/auth");
 
 
 //get single match
 router.get("/:id", async(req, res)=>{
-    try {
-     let data = await MatchModel.findById(req.params.id);
-     if(!data)
-      return res.status(400).send("Match not found");
-     return res.send(data)  
-    } catch (error) {
-        return res.status(400).send("Invalid ID");
-        
-    } 
+    console.log(req.user);
+  let page = Number(req.query.page ? req.query.page : 1);
+  let perPage = Number(req.query.perPage ? req.query.perPage : 10);
+  let skipRecords = perPage * (page - 1);
+  let matches = await MatchModel.find().skip(skipRecords).limit(perPage);
+  return res.send(matches);
  })
  //update
  router.put("/:id", async(req, res)=>{

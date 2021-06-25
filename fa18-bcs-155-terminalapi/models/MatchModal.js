@@ -10,9 +10,9 @@ var MatchSchema = mongoose.Schema({
 function validateProduct(data){
     const schema = Joi.Object({
         City: Joi.string().min(3).max(10).required(),
-        Date: Joi.Date().min(3).max(10).required(),
-        TeamA: Joi.string().min(10).required(),
-        TeamB: Joi.string().min(0).$_match(!TeamA).required(),
+        Date: Joi.Date().required(),
+        TeamA: Joi.string().min(6).max(20).required(),
+        TeamB: Joi.string().min(6).max(20).$_match(!TeamA).required(),
         
     });
     return schema.validate(data,{abortEarly:false});

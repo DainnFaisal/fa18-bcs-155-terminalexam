@@ -9,7 +9,8 @@ var config = require('config');
 var cors = require('cors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/api/users');
-var merchRouter = require('./routes/api/Match');
+var MatchRouter = require('./routes/api/matches');
+var TeamRouter = require('./routes/api/Teams');
 var app = express();
 
 // view engine setup
@@ -24,7 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/merch', merchRouter);
+app.use('/api/Matches', MatchRouter);
+app.use('/api/Teams', TeamRouter);
+
 app.use(cors());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

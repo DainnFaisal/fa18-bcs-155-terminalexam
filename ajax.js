@@ -4,9 +4,10 @@ $(function () {
    $("#user").on("click", ".btn-danger", deleteData);
    $("#Signup").click(showsignup);
    $("#submit").click(addUser);
+   $("#loginsubmit").click(addUser);
   $("#addBtnrecord").click(addData);
   $("#submit").click(showMatchData );
-  
+  $("#loginsubmit").click(showMatchData);
 });
 
 
@@ -27,6 +28,7 @@ function addData() {
     },
   });
 }
+
 
 
 
@@ -94,6 +96,19 @@ function addUser() {
     url: "http://localhost:4000/api/users/register",
     method: "POST",
     data: { Name, Email,Password },
+    success: function (response) {
+      console.log(response)
+    },
+  });
+}
+function ValidateUser() {
+  var Email = $("#loginEmail").val();
+  var Password = $("#loginPassword").val();
+  console.log(Email);  
+  $.ajax({
+    url: "http://localhost:4000/api/users/login",
+    method: "POST",
+    data: { Email,Password },
     success: function (response) {
       console.log(response)
     },

@@ -1,7 +1,7 @@
 const express = require("express");
 let router = express.Router();
 const auth = require("../../middleWares/auth");
-const admin = require("../../middleWares/validateUser");
+const admin = require("../../middlewares/validateProducts");
 const TeamModel = require("../../models/Team")
 //get products
 router.get("/",async (req, res) => {

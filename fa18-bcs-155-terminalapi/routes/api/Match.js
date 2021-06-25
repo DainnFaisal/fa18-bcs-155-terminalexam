@@ -1,18 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var {MatchModel}= require("../../models/MatchModal");
-var validateProduct= require("../../middlewares/validateUser");
+var validateProduct= require("../../middlewares/validateProducts");
 var auth= require("../../middlewares/auth");
 
 
-//get single match
-router.get("/:id", async(req, res)=>{
+//get match
+router.get("/", async(req, res)=>{
     console.log(req.user);
-  let page = Number(req.query.page ? req.query.page : 1);
-  let perPage = Number(req.query.perPage ? req.query.perPage : 10);
-  let skipRecords = perPage * (page - 1);
-  let matches = await MatchModel.find().skip(skipRecords).limit(perPage);
-  return res.send(matches);
+    let data = await MatchModel.find();
+    return res.send(data)
  })
  //update
  router.put("/:id", async(req, res)=>{

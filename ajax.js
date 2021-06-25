@@ -1,29 +1,29 @@
 $(function () {
-  $("#signupform").hide();
+  // $("#signupform").hide();
   showMatchData();
-  $("#user").on("click", ".btn-danger", deleteData);
-
-  $("#user").on("click", ".nav-link", showMatchData);
-  
-  $("#addBtn").click(addData);
-  
+   $("#user").on("click", ".btn-danger", deleteData);
+   $("#Signup").click(showsignup);
+   $("#submit").click(addUser);
+  $("#addBtnrecord").click(addData);
+  $("#submit").click(showMatchData );
   
 });
 
 
 function addData() {
-  $("#signupform").show();
-  var Name = $("#Name").val();
+  $("#signupform").hide();
+  var City = $("#City").val();
   var Date = $("#Date").val();
   var TeamA = $("#TeamA").val();
   var TeamB = $("#TeamB").val();
+  console.log(City);
   $.ajax({
-    url: "http://localhost:4000/api/Matches/",
+    url: "http://localhost:4000/api/matches/",
     method: "PUT",
-    data: { Name, Date,TeamA,TeamB },
+    data: { City, Date,TeamA,TeamB },
     success: function (response) {
       console.log(response);
-      showMatchData();
+      location.reload();
     },
   });
 }
@@ -31,13 +31,14 @@ function addData() {
 
 
 function deleteData() {
+  $("#signupform").hide();
   var btn = $(this);
   var parentDiv = btn.closest(".users");
   let id = parentDiv.attr("data-id");
   console.log(id);
-  $("#footer").removeClass("fixed-bottom");
+
   $.ajax({
-    url: "http://localhost:4000/api/Matches/" + id,
+    url: "http://localhost:4000/api/matches/" + id,
     method: "DELETE",
     success: function (response) {
     location.reload();
@@ -47,20 +48,19 @@ function deleteData() {
 function showMatchData() {
   $("#signupform").hide();
   $.ajax({
-    url: "http://localhost:4000/api/Matches",
+    url: "http://localhost:4000/api/matches",
     method: "GET",
     success: function (response) {
       console.log(response);
       var temp = $("#user");
       temp.empty();
-      
       for (var i = 0; i < response.length; i++) {
         var rec = response[i];
         temp.append(
-          `<a class="nav-link" id="fulldata"><div class="d-flex justify-content-center users" data-id="${rec._id}">
-          <h3><img src="${rec.City}" alt="image"><p>  ${rec.Date}<p>Price: ${rec.Price}</a> 
+          `<div class="d-flex justify-content-center users" data-id="${rec._id}">
+          <h2>City:</h2><h3>${rec.City}<p>  ${rec.Date}<p> ${rec.TeamA} vs ${rec.TeamB}</a> 
           <button class="btn btn-danger btn-sm float-right">Delete </button></br>
-          <button class="btn btn-warning btn-sm float-right">Update</button></br>
+          
           `
           );
       
@@ -72,6 +72,33 @@ function showMatchData() {
 
 
 
+
+
+
+
+function showsignup() {
+  var temp = $("#user");
+  temp.empty();
+  $("#signupform").show();
+
+}
+
+
+
+function addUser() {
+  var Name = $("#signupName").val();
+  var Email = $("#signupEmail").val();
+  var Password = $("#signupPassword").val();
+  console.log(Name);  
+  $.ajax({
+    url: "http://localhost:4000/api/users/register",
+    method: "POST",
+    data: { Name, Email,Password },
+    success: function (response) {
+      console.log(response)
+    },
+  });
+}
 
 
 

@@ -4,22 +4,12 @@ var MatchSchema = mongoose.Schema({
     City: String,
     Date: String,
     TeamA : String,
-    TeamB: Number,
+    TeamB: String,
      
 });
-function validateProduct(data){
-    const schema = Joi.Object({
-        City: Joi.string().min(3).max(10).required(),
-        Date: Joi.Date().required(),
-        TeamA: Joi.string().min(6).max(20).required(),
-        TeamB: Joi.string().min(6).max(20).$_match(!TeamA).required(),
-        
-    });
-    return schema.validate(data,{abortEarly:false});
-
-}
 
 
-var Match = mongoose.model("team",MatchSchema);
-module.exports.MatchModel = Match;
-module.exports.validate = validateProduct;
+
+var Matches = mongoose.model("teams",MatchSchema);
+module.exports.MatchModel = Matches;
+
